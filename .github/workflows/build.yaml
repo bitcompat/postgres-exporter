@@ -10,11 +10,7 @@ jobs:
     uses: bitcompat/base/.github/workflows/build.yaml@main
     with:
       name: main
-      image_tag: |
-        latest
-        0.13.0-bullseye-r1 # renovate: datasource=github-releases depName=prometheus-community/postgres_exporter
-        0.13.0-bullseye # renovate: datasource=github-releases depName=prometheus-community/postgres_exporter
-        0.13.0 # renovate: datasource=github-releases depName=prometheus-community/postgres_exporter
-        0.11
-        0
+      version: '0.13.0' # renovate: datasource=github-releases depName=prometheus-community/postgres_exporter
+      revision: '1'
+      major_only_tag: true
     secrets: inherit
