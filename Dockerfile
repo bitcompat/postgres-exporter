@@ -1,12 +1,12 @@
 # syntax=docker/dockerfile:1.4
 
-FROM golang:1.20-bullseye AS golang-builder
+FROM golang:1.21-bullseye AS golang-builder
 
 ARG PACKAGE=postgres_exporter
 ARG TARGET_DIR=postgres-exporter
 # renovate: datasource=github-releases depName=prometheus-community/postgres_exporter
-ARG VERSION=0.11.1
-ARG REF=v${VERSION}
+ARG BUILD_VERSION=0.11.1
+ARG REF=v${BUILD_VERSION}
 
 ARG TARGETARCH
 
@@ -25,7 +25,7 @@ RUN --mount=type=cache,target=/root/.cache/go-build <<EOT /bin/bash
     ls -lah
     mkdir -p /opt/bitnami/${TARGET_DIR}/licenses
     mkdir -p /opt/bitnami/${TARGET_DIR}/bin
-    cp -f LICENSE /opt/bitnami/${TARGET_DIR}/licenses/${PACKAGE}-${VERSION}.txt
+    cp -f LICENSE /opt/bitnami/${TARGET_DIR}/licenses/${PACKAGE}-${BUILD_VERSION}.txt
     cp -f ${PACKAGE} /opt/bitnami/${TARGET_DIR}/bin/${PACKAGE}
     popd
 

@@ -11,6 +11,6 @@ jobs:
     with:
       name: main
       version: '0.13.0' # renovate: datasource=github-releases depName=prometheus-community/postgres_exporter
-      revision: '1'
+      revision: '2'
       major_only_tag: true
     secrets: inherit
