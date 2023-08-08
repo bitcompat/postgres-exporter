@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.4
 
-FROM golang:1.20-bullseye AS golang-builder
+FROM golang:1.21-bullseye AS golang-builder
 
 ARG PACKAGE=postgres_exporter
 ARG TARGET_DIR=postgres-exporter
