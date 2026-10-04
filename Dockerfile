@@ -1,11 +1,13 @@
 # syntax=docker/dockerfile:1.27
 
-FROM golang:1.24-bullseye AS golang-builder
+ARG BUILD_VERSION=0.11.1
+
+FROM golang:1.24-trixie AS golang-builder
 
 ARG PACKAGE=postgres_exporter
 ARG TARGET_DIR=postgres-exporter
 # renovate: datasource=github-releases depName=prometheus-community/postgres_exporter
-ARG BUILD_VERSION=0.11.1
+ARG BUILD_VERSION
 ARG REF=v${BUILD_VERSION}
 
 ARG TARGETARCH
@@ -33,20 +35,22 @@ RUN --mount=type=cache,target=/root/.cache/go-build <<EOT /bin/bash
 EOT
 
 
-FROM docker.io/bitnami/minideb:bullseye as stage-0
+FROM docker.io/bitnami/minideb:trixie as stage-0
+
+ARG BUILD_VERSION
 
 ARG TARGETARCH
 ENV HOME="/" \
     OS_ARCH="${TARGETARCH}" \
-    OS_FLAVOUR="debian-11" \
+    OS_FLAVOUR="debian-13" \
     OS_NAME="linux" \
-    APP_VERSION="0.11.1" \
+    APP_VERSION="${BUILD_VERSION}" \
     BITNAMI_APP_NAME="postgres-exporter" \
     PATH="/opt/bitnami/postgres-exporter/bin:$PATH"
 
-LABEL org.opencontainers.image.ref.name="0.11.1-debian-11-r1" \
+LABEL org.opencontainers.image.ref.name="${BUILD_VERSION}-trixie" \
       org.opencontainers.image.title="postgres-exporter" \
-      org.opencontainers.image.version="0.11.1"
+      org.opencontainers.image.version="${BUILD_VERSION}"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
